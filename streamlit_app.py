@@ -93,7 +93,51 @@ LATENT_DIM = st.sidebar.slider("Latent Dimension", 32, 256, 128, 32)
 BATCH_SIZE = st.sidebar.slider("Batch Size", 32, 256, 128, 32)
 
 st.sidebar.markdown("---")
-st.sidebar.markdown(f"**Device:** {st.session_state.device}")
+st.sidebar.markdown("### 🖥️ Device Selection")
+
+# Check GPU availability
+cuda_available = torch.cuda.is_available()
+
+if cuda_available:
+    st.sidebar.success(f"✅ GPU Available: {torch.cuda.get_device_name(0)}")
+    st.sidebar.info(f"Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
+    
+    # Device selector
+    device_option = st.sidebar.radio(
+        "Select Device:",
+        ["GPU (CUDA)", "CPU"],
+        index=0 if st.session_state.device.type == 'cuda' else 1
+    )
+    
+    # Update device based on selection
+    new_device = torch.device("cuda") if device_option == "GPU (CUDA)" else torch.device("cpu")
+    
+    # If device changed, move models to new device
+    if new_device != st.session_state.device:
+        st.session_state.device = new_device
+        
+        # Move existing models to new device
+        if st.session_state.model_beta1 is not None:
+            st.session_state.model_beta1 = st.session_state.model_beta1.to(st.session_state.device)
+        if st.session_state.model_beta5 is not None:
+            st.session_state.model_beta5 = st.session_state.model_beta5.to(st.session_state.device)
+        
+        st.sidebar.success(f"✅ Switched to {st.session_state.device}")
+else:
+    st.sidebar.warning("⚠️ GPU not available")
+    st.sidebar.info("Using CPU (training will be slower)")
+    st.session_state.device = torch.device("cpu")
+
+st.sidebar.markdown(f"**Current Device:** {st.session_state.device}")
+
+# Show GPU memory usage if on CUDA
+if st.session_state.device.type == 'cuda':
+    allocated = torch.cuda.memory_allocated(0) / 1e9
+    cached = torch.cuda.memory_reserved(0) / 1e9
+    st.sidebar.text(f"Memory Used: {allocated:.2f} GB")
+    st.sidebar.text(f"Memory Cached: {cached:.2f} GB")
+
+st.sidebar.markdown("---")
 
 # ============================================================================
 # HOME PAGE
