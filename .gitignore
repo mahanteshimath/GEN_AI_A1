@@ -36,8 +36,7 @@ data/
 *.pkl
 *.pickle
 
-# Streamlit
-.streamlit/
+
 
 # Images
 *.png
