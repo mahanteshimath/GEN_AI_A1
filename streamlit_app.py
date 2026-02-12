@@ -47,12 +47,32 @@ st.markdown("""
         border-radius: 0.5rem;
         border-left: 4px solid #4ECDC4;
         margin: 1rem 0;
+        color: #000000 !important;
+    }
+    .info-box * {
+        color: #000000 !important;
+    }
+    .info-box ul, .info-box li, .info-box p, .info-box b, .info-box code {
+        color: #000000 !important;
     }
     .stButton>button {
         width: 100%;
         background-color: #FF6B6B;
         color: white;
         font-weight: bold;
+    }
+    /* Ensure text in Streamlit components is dark */
+    .stAlert, .stInfo, .stSuccess, .stWarning, .stError {
+        color: #000000 !important;
+    }
+    .stAlert *, .stInfo *, .stSuccess *, .stWarning *, .stError * {
+        color: #000000 !important;
+    }
+    /* Markdown content with light backgrounds */
+    [data-testid="stMarkdownContainer"] p,
+    [data-testid="stMarkdownContainer"] li,
+    [data-testid="stMarkdownContainer"] span {
+        color: inherit;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -818,12 +838,23 @@ st.markdown(
     '''
     <style>
     .streamlit-expanderHeader {
-        background-color: blue;
-        color: white; # Adjust this for expander header color
+        background-color: #4ECDC4;
+        color: #000000 !important;
+        font-weight: bold;
     }
     .streamlit-expanderContent {
-        background-color: blue;
-        color: white; # Expander content color
+        background-color: #f0f2f6;
+        color: #000000 !important;
+    }
+    .streamlit-expanderContent * {
+        color: #000000 !important;
+    }
+    /* Ensure good contrast for all Streamlit components */
+    .stAlert {
+        color: #000000 !important;
+    }
+    .stAlert * {
+        color: #000000 !important;
     }
     </style>
     ''',
