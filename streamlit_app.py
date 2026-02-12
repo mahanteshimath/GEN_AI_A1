@@ -768,3 +768,39 @@ elif page == "⚖️ β-VAE Comparison":
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📝 About")
 st.sidebar.info("Interactive VAE Explorer - Learn Variational Autoencoders through hands-on experimentation!")
+
+# Custom CSS for expanders and footer
+st.markdown(
+    '''
+    <style>
+    .streamlit-expanderHeader {
+        background-color: blue;
+        color: white; # Adjust this for expander header color
+    }
+    .streamlit-expanderContent {
+        background-color: blue;
+        color: white; # Expander content color
+    }
+    </style>
+    ''',
+    unsafe_allow_html=True
+)
+
+# Footer
+footer="""<style>
+
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: #2C1E5B;
+color: white;
+text-align: center;
+}
+</style>
+<div class="footer">
+<p>Developed with ❤️ by <a style='display: inline; text-align: center;' href="https://www.linkedin.com/in/mahantesh-hiremath/" target="_blank">MAHANTESH HIREMATH</a></p>
+</div>
+"""
+st.markdown(footer,unsafe_allow_html=True)
